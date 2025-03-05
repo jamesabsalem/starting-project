@@ -1,5 +1,17 @@
-import { Component, EventEmitter, input, Input,output,Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  input,
+  Input,
+  output,
+  Output,
+} from '@angular/core';
 
+interface User {
+  id: string;
+  name: string;
+  avatar: string;
+}
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -7,20 +19,13 @@ import { Component, EventEmitter, input, Input,output,Output } from '@angular/co
   styleUrl: './user.component.css',
 })
 export class UserComponent {
-  // @Input() id!: string;
-  // @Input({ required: true }) avatar!: string;
-  // @Input({ required: true }) name!: string;
-  // @Output() select = new EventEmitter();
-  id = input.required<string>();
-  avatar = input.required<string>();
-  name = input.required<string>();
-  select = output<string>();
-
+  @Input({ required: true }) user!: User;
+  @Output() select = new EventEmitter();
   get imagePath() {
-    return 'assets/users/' + this.avatar();
+    return 'assets/users/' + this.user.avatar;
   }
 
   onSelectUser() {
-    this.select.emit(this.id());
+    this.select.emit(this.user.id);
   }
 }
